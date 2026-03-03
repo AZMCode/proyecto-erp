@@ -7,9 +7,9 @@ export interface Config {
   /**
    * The length of time a user JWT is valid for
    */
-  jwtValidity: string
+  jwtValiditySeconds: number
   /**
    * The length of time a Refresh Token is valid for
    */
-  refreshTokenValidity: string
+  refreshTokenValiditySeconds: number
 }
