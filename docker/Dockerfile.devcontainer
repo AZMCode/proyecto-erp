@@ -1,0 +1,25 @@
+FROM nixos/nix:latest AS builder
+
+COPY docker/nix /etc/nix
+COPY . /workdir
+
+WORKDIR /workdir/docker/nix
+
+RUN nix flake prefetch-inputs || true
+RUN nix build .#devShells.x86_64-linux.default
+
+RUN mkdir /imageOutput
+WORKDIR /imageOutput
+
+RUN readlink result > closurePath
+
+RUN rsync -avR $(nix store --query --requisites `cat closurePath`) .
+RUN rsync -avR `cat closurePath` .
+
+FROM scratch
+
+COPY --from=builder /imageOutput /
+
+ENV PATH="/bin"
+
+CMD [ "/bin/bash" "-i" ]

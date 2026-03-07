@@ -1,0 +1,7 @@
+name: Aplicación ERP
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: Dockerfile.backend

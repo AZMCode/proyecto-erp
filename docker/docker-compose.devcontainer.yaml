@@ -1,0 +1,7 @@
+include:
+  - path: docker-compose.yaml
+
+services:
+  devcontainer:
+    build:
+      dockerfile: Dockerfile.devcontainer
